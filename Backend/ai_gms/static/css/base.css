@@ -1,0 +1,121 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: rgb(189, 238, 189);
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 30px;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    background-color: rgb(150, 251, 150);
+}
+
+.title {
+    color: green;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    position: absolute;
+    bottom: 0;
+    top: 20px;
+    left: 0;
+    right: 0;
+    justify-content: center;
+}
+
+nav ul li {
+    padding-right: 15px;
+}
+
+nav ul li a {
+    display: inline-block;
+    text-decoration: none;
+    color: green;
+    font-weight: bold;
+    font-size: 16px;
+    transition: transform 0.3s ease-in-out;
+}
+
+nav ul li a.active {
+    color: black;
+}
+
+nav ul li a:hover {
+    transform: translateY(-5px);
+    color: white;
+}
+
+.auth-btn button {
+    padding: 7px 15px 7px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(112, 231, 112);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+
+
+.auth-btn button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.menu-icon {
+    display: none;
+}
+
+
+@media (max-width:768px) {
+    nav ul {
+        position: absolute;
+        flex-direction: column;
+        justify-content: center;
+        top: 60px;
+        text-align: center;
+        left: 0;
+        right: 0;
+        bottom: auto;
+        background-color: rgb(150, 251, 150);
+        overflow: hidden;
+    }
+
+    nav ul li {
+        padding: 10px;
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    #menu-list {
+        transition: all 0.5s;
+    }
+
+    .auth-btn button {
+        display: none;
+    }
+}
+
+nav ul li a.active {
+    color: black;
+}
