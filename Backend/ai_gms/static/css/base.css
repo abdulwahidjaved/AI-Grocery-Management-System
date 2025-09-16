@@ -9,39 +9,32 @@ body {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
-    background-color: rgb(189, 238, 189);
 }
 
 nav {
     display: flex;
+    justify-content: space-between;
     flex-direction: row;
     padding: 10px 30px;
-    justify-content: space-between;
     align-items: center;
-    text-align: center;
-    background-color: rgb(150, 251, 150);
+    background-color: rgb(153, 243, 153);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.title {
-    color: green;
+nav .title {
     font-weight: bold;
     font-size: 30px;
+    color: green;
 }
 
 nav ul {
     display: flex;
     flex-direction: row;
     list-style: none;
-    position: absolute;
-    bottom: 0;
-    top: 20px;
-    left: 0;
-    right: 0;
-    justify-content: center;
 }
 
 nav ul li {
-    padding-right: 15px;
+    padding-right: 20px;
 }
 
 nav ul li a {
@@ -53,69 +46,86 @@ nav ul li a {
     transition: transform 0.3s ease-in-out;
 }
 
-nav ul li a.active {
-    color: black;
-}
-
 nav ul li a:hover {
     transform: translateY(-5px);
     color: white;
 }
 
-.auth-btn button {
-    padding: 7px 15px 7px 15px;
-    border: none;
-    border-radius: 10px;
-    background-color: rgb(112, 231, 112);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
+nav ul li a.active {
+    color: black;
 }
 
-
+.auth-btn button {
+    padding: 5px 10px 5px 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(107, 222, 107);
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
 
 .auth-btn button:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.login-btn-list {
+    display: none;
 }
 
 .menu-icon {
     display: none;
 }
 
+@media (max-width: 768px) {
 
-@media (max-width:768px) {
     nav ul {
         position: absolute;
         flex-direction: column;
-        justify-content: center;
-        top: 60px;
         text-align: center;
+        top: 60px;
         left: 0;
         right: 0;
-        bottom: auto;
-        background-color: rgb(150, 251, 150);
         overflow: hidden;
+        gap: 0;
+        background-color: rgb(153, 243, 153);
+        transition: all 0.5s;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
     }
 
     nav ul li {
         padding: 10px;
     }
 
-    .menu-icon {
+    .login-btn-list {
         display: block;
     }
 
-    #menu-list {
-        transition: all 0.5s;
+    .login-btn-list button {
+        box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        padding: 5px 90px 5px 90px;
+        border: none;
+        border-radius: 10px;
+        background-color: rgb(107, 222, 107);
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: transform 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    nav ul li a.active {
+        color: black;
     }
 
     .auth-btn button {
         display: none;
     }
-}
 
-nav ul li a.active {
-    color: black;
+    .menu-icon {
+        display: block;
+    }
 }

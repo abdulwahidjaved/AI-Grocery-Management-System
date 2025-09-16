@@ -4,12 +4,13 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <title>{% block title %}{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}
+    </title>
 </head>
 
 <body>
@@ -28,11 +29,13 @@
                     <li><a href="/features" class="{% if request.path == '/features/' %}active{% endif %}">Features</a></li>
                     <li><a href="/about" class="{% if request.path == '/about/' %}active{% endif %}">About</a></li>
                     <li><a href="/contact" class="{% if request.path == '/contact/' %}active{% endif %}">Contact</a></li>
+                    <li class="login-btn-list">
+                        <button>Login</button>
+                    </li>
                 </ul>
-
             </div>
 
-            <!-- Button -->
+            <!-- Login Button -->
             <div class="auth-btn">
                 <button>Login</button>
             </div>
@@ -43,8 +46,9 @@
             </div>
         </nav>
     </header>
-    {% block body %}{% endblock body %}
     <script src="{% static 'js/base.js' %}"></script>
+    {% block body %}{% endblock body %}
+
 </body>
 
 </html>
