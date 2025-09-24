@@ -1,0 +1,108 @@
+{% extends "dashboard/admin/admin.html" %}
+{% load static %}
+
+{% block title %}Admin - Reports{% endblock title %}
+
+{% block extended_header %}
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6fa;
+    margin: 0;
+    padding: 0;
+}
+
+.reportsContainer {
+    min-width: 900px;
+    margin: 50px auto;
+    padding: 25px 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center; /* center everything */
+}
+
+.reportsContainer h1 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.reportItem {
+    margin: 15px 0;
+    font-size: 18px;
+    color: #555;
+}
+
+.reportItem span {
+    font-weight: bold;
+    color: #2d3436;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead th {
+    background: #2d3436;
+    color: white;
+    padding: 12px;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    text-align: center; /* center table text */
+}
+
+tfoot td {
+    font-weight: bold;
+    padding: 12px;
+    text-align: center;
+}
+</style>
+{% endblock extended_header %}
+
+{% block body %}
+<div class="reportsContainer">
+    <h1>Admin - Reports</h1>
+
+    <div class="reportItem">Total Products: <span>{{ total_products }}</span></div>
+    <div class="reportItem">Total Stock: <span>{{ total_stock }}</span></div>
+    <div class="reportItem">Total Revenue: <span>{{ total_revenue }}</span></div>
+    <div class="reportItem">Average Bill Amount: <span>{{ average_bill }}</span></div>
+
+    <h2 style="margin-top:40px;">Recent Bills</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Bill ID</th>
+                <th>Customer</th>
+                <th>Total Amount</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.id }}</td>
+                <td>
+                    {% if bill.customer %}
+                        {{ bill.customer.name }}
+                    {% else %}
+                        Guest
+                    {% endif %}
+                </td>
+                <td>{{ bill.total_amount }}</td>
+                <td>{{ bill.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No bills found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock body %}

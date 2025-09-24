@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/dashboard/admin/admin.css' %}">
+    {% block extended_header %}{% endblock extended_header %}
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <!-- Error Text -->
+    <div class="error-text">
+        <h1>Please use our mobile application</h1>
+    </div>
+    <div class="mainBg">
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+
+            <!-- Icon -->
+            <div class="menu-icon" id="menu-icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+                <ul>
+                    <li>
+                        <i class="fa-solid fa-box"></i>
+                        <span class="link-text"><a href="/dashboard/admin/products">Products</a></span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-chart-bar"></i>
+                        <span class="link-text"><a href="/dashboard/admin/inventory">Inventory</a></span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span class="link-text"><a href="/dashboard/admin/staff">Staff</a></span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-file-alt"></i>
+                        <span class="link-text"><a href="/dashboard/admin/reports/">Reports</a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Contents -->
+        <!-- <div class="contents">
+            <h1>Hello Admin,</h1>
+        </div> -->
+
+        {% block body %}{% endblock body %}
+    </div>
+    <script src="{% static 'js/dashboard/admin/admin.js' %}"></script>
+</body>
+
+</html>

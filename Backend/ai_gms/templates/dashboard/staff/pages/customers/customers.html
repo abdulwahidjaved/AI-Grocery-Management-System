@@ -1,0 +1,94 @@
+{% extends "dashboard/staff/staff.html" %}
+{% block title %}Staff - Customers{% endblock title %}
+
+{% block extended_header %}
+<style>
+.customerContainer {
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.billCard {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.billCard h3 {
+    margin: 0 0 10px;
+    color: #2d3436;
+}
+
+.billCard p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #636e72;
+}
+
+.billTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.billTable th {
+    background: #2d3436;
+    color: white;
+    padding: 8px;
+    text-align: left;
+}
+
+.billTable td {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.totalRow td {
+    font-weight: bold;
+    color: #d63031;
+}
+</style>
+{% endblock extended_header %}
+
+{% block body %}
+<div class="customerContainer">
+    {% for bill in bills %}
+    <div class="billCard">
+        <h3>Bill #{{ bill.id }} - {{ bill.customer.name }}</h3>
+        <p>Email: {{ bill.customer.email }} | Phone: {{ bill.customer.phone_number }}</p>
+        <p>Date: {{ bill.created_at|date:"d M Y, H:i" }}</p>
+
+        <table class="billTable">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in bill.items.all %}
+                <tr>
+                    <td>{{ item.product_name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.product_price }}</td>
+                    <td>{{ item.total }}</td>
+                </tr>
+                {% endfor %}
+                <tr class="totalRow">
+                    <td colspan="3">Grand Total</td>
+                    <td>{{ bill.total_amount }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% empty %}
+    <p>No bills found.</p>
+    {% endfor %}
+</div>
+{% endblock body %}

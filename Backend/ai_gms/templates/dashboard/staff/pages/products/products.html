@@ -1,0 +1,94 @@
+{% extends "dashboard/staff/staff.html" %}
+{% block title %}Admin - Inventory{% endblock title %}
+
+{% block extended_header %}
+{% load static %}
+<style>
+    .inventoryContainer {
+        width: 90%;
+        margin: 20px auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .productCard {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        /* text/details aligned left */
+        text-align: left;
+        justify-content: flex-start;
+        height: 280px;
+        margin: 20px;
+    }
+
+    .productCard img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        align-self: center;
+        /* centers the image horizontally */
+    }
+
+    .productCard .productDetails {
+        padding-left: 10px;
+        /* adds padding between image and text */
+        width: 100%;
+    }
+
+    .productCard h3 {
+        margin: 5px 0;
+    }
+
+    .productCard p {
+        margin: 3px 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .productCard .price {
+        font-weight: bold;
+        color: #28a745;
+        margin-top: 5px;
+    }
+
+    .productCard .quantity {
+        margin-top: 3px;
+        font-size: 13px;
+        color: #888;
+    }
+</style>
+{% endblock extended_header %}
+
+
+{% block body %}
+
+
+<div class="inventoryContainer">
+    {% for product in products %}
+    <div class="productCard">
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+        <img src="{% static 'placeholder.png' %}" alt="No image">
+        {% endif %}
+        <div class="productDetails">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description|default:"No description" }}</p>
+            <p class="price">Rs. {{ product.price }}</p>
+            <p class="quantity">Quantity: {{ product.quantity }}</p>
+        </div>
+    </div>
+
+    {% empty %}
+    <p>No products available.</p>
+    {% endfor %}
+</div>
+{% endblock body %}

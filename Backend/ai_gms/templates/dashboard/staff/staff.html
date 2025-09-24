@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/dashboard/staff/staff.css' %}">
+    {% block extended_header %}{% endblock extended_header %}
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <!-- Error Text -->
+    <div class="error-text">
+        <h1>Please use our mobile application</h1>
+    </div>
+    <div class="mainBg">
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+
+            <!-- Icon -->
+            <div class="menu-icon" id="menu-icon">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <!-- Features -->
+            <div class="features">
+                <ul>
+                    <li>
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="link-text"><a href="/dashboard/staff/billing">Billing</a></span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-boxes"></i>
+                        <span class="link-text"><a href="/dashboard/staff/customers">Customers</a></span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-users"></i>
+                        <span class="link-text"><a href="/dashboard/staff/products">Products</a></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {% block body %}{% endblock body %}
+    </div>
+    <script src="{% static 'js/dashboard/staff/staff.js' %}"></script>
+</body>
+
+</html>

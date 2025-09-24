@@ -1,0 +1,78 @@
+{% extends "dashboard/admin/admin.html" %}
+{% block title %}Admin - Staff{% endblock title %}
+
+{% block extended_header %}
+{% load static %}
+<style>
+.staffContainer {
+    width: 90%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.staffCard {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* text aligned left */
+    text-align: left;
+    justify-content: flex-start;
+    height: 360px; /* increased height for extra info */
+    margin: 20px;
+}
+
+.staffCard img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    align-self: center; /* centers the image horizontally */
+}
+
+.staffCard .staffDetails {
+    padding-left: 10px;
+    width: 100%;
+}
+
+.staffCard h3 {
+    margin: 5px 0;
+}
+
+.staffCard p {
+    margin: 3px 0;
+    font-size: 14px;
+    color: #555;
+}
+</style>
+{% endblock extended_header %}
+
+{% block body %}
+
+
+<div class="staffContainer">
+    {% for staff in staffs %}
+    <div class="staffCard">
+        {% if staff.image %}
+        <img src="{{ staff.image.url }}" alt="{{ staff.firstName }} {{ staff.lastName }}">
+        {% else %}
+        <img src="{% static 'placeholder.png' %}" alt="No image">
+        {% endif %}
+        <div class="staffDetails">
+            <h3>{{ staff.firstName }} {{ staff.lastName }}</h3>
+            <p>Age: {{ staff.age }}</p>
+            <p>Phone: {{ staff.phoneNumber|default:"Not provided" }}</p>
+            <p>Role: {{ staff.role|default:"Staff" }}</p>
+            <p>Address: {{ staff.address|default:"No address provided" }}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p>No staff available.</p>
+    {% endfor %}
+</div>
+{% endblock body %}

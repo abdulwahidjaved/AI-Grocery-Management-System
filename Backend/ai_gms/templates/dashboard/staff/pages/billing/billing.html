@@ -1,0 +1,204 @@
+{% extends "dashboard/staff/staff.html" %}
+{% load static %}
+
+{% block extended_header %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f6fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .billingContainer {
+        min-width: 1000px;
+        margin: 30px auto;
+        background: white;
+        padding: 25px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .billingContainer h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    form label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+        margin-top: 15px;
+    }
+
+    form input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    thead th {
+        background: #2d3436;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+
+    tbody td {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .itemTotal {
+        font-weight: bold;
+        color: #0984e3;
+    }
+
+    tfoot td {
+        font-weight: bold;
+        padding-top: 10px;
+    }
+
+    button {
+        background-color: #00b894;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 15px;
+        float: right;
+        transition: background 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #019874;
+    }
+
+    .totalAmount {
+        font-size: 18px;
+        font-weight: bold;
+        color: #d63031;
+        margin-top: 20px;
+        text-align: right;
+    }
+</style>
+{% endblock extended_header %}
+
+{% block body %}
+<div class="billingContainer">
+    <h2>Staff Billing</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Customer Name</label>
+        <input type="text" name="customer_name" placeholder="Enter Customer Name" required>
+
+        <label>Customer Phone</label>
+        <input type="text" name="customer_phone" placeholder="Enter Phone Number">
+
+        <label>Customer Email</label>
+        <input type="email" name="customer_email" placeholder="Enter Email Address">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Available</th>
+                    <th>Price</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <input type="hidden" name="product_id[]" value="{{ product.id }}">
+                        <input type="number" name="quantity[]" min="0" max="{{ product.quantity }}" value="0">
+                    </td>
+                    <td class="itemTotal">0</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="totalAmount">Total: <span id="totalAmount">0</span></div>
+        <button type="submit">Generate Bill</button>
+    </form>
+
+    {% if bill_items %}
+    <h2>Bill #{{ bill_id }} for {{ customer_name }}</h2>
+    <p>Phone: {{ customer_phone }} | Email: {{ customer_email }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in bill_items %}
+            <tr>
+                <td>{{ item.product_name }}</td> <!-- use product_name snapshot -->
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.product_price }}</td> <!-- snapshot price -->
+                <td>{{ item.total }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Grand Total</td>
+                <td>{{ total_amount }}</td>
+            </tr>
+        </tfoot>
+    </table>
+    {% endif %}
+
+</div>
+
+<script>
+    // JS to calculate row total and grand total dynamically
+    const rows = document.querySelectorAll('table tbody tr');
+    const totalAmountElem = document.getElementById('totalAmount');
+
+    rows.forEach(row => {
+        const qtyInput = row.querySelector('input[type="number"]');
+        if (!qtyInput) return; // skip bill display rows
+        const price = parseFloat(row.cells[2].innerText);
+        const totalCell = row.querySelector('.itemTotal');
+
+        qtyInput.addEventListener('input', () => {
+            let qty = parseInt(qtyInput.value) || 0;
+            totalCell.innerText = (price * qty).toFixed(2);
+
+            // Update grand total
+            let grandTotal = 0;
+            document.querySelectorAll('.itemTotal').forEach(cell => {
+                grandTotal += parseFloat(cell.innerText) || 0;
+            });
+            totalAmountElem.innerText = grandTotal.toFixed(2);
+        });
+    });
+</script>
+
+{% endblock body %}
